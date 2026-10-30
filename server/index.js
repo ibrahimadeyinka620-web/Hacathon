@@ -14,10 +14,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = Number(process.env.PORT || 3001);
 
-const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
+const allowedOrigins = (process.env.CORS_ORIGIN || "")
   .split(",")
   .map((s) => s.trim())
   .filter(Boolean);
+// Always allow the local dev frontend and the server's own origin (production build)
+for (const o of ["http://localhost:5173", "http://localhost:" + PORT, "http://127.0.0.1:" + PORT]) {
+  if (!allowedOrigins.includes(o)) allowedOrigins.push(o);
+}
 
 app.use(
   cors({

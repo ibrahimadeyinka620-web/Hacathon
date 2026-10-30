@@ -122,7 +122,8 @@ function seedIfEmpty() {
 seedIfEmpty();
 
 export function getDatabaseSchema() {
-  const tables = ["users","products","orders","order_items","subscriptions"];
+  // `tables` is a hardcoded whitelist — never derived from user input.
+  const tables = ["users", "products", "orders", "order_items", "subscriptions"];
   const lines = [];
   lines.push("Database: SQLite (analytics). Tables and columns:");
   for (const t of tables) {
